@@ -1,0 +1,164 @@
+
+taller #1
+
+fun main() {
+    val morningNotification = 51
+    val eveningNotification = 135
+    printNotificationSummary(morningNotification)
+    printNotificationSummary(eveningNotification)
+}
+
+fun printNotificationSummary(numberOfMessages: Int) {
+    if (numberOfMessages < 100) {
+        println("Tienes notificaciones de $numberOfMessages.")
+    } else {
+        println("Tienes más de 99 notificaciones.")
+    }
+}
+
+
+
+taller #2
+
+fun main() {
+    val child = 5
+    val adult = 28
+    val senior = 87
+    val isMonday = true
+    println("El precio de la entrada al cine para una persona un   $child es \$${ticketPrice(Niña es lunes)}.")
+    printlnEl precio de la entrada al cine para una persona de $adult es \$${ticketPrice(adultos el lunes)}.")
+    printlnEl precio de la entrada al cine para una persona  $senior es \$${ticketPrice(mayor el lunes)}.")
+}
+
+fun ticketPrice(age: Int, lunes: Boolean): Int {
+    return when {
+        age <= 12 -> 15
+        age in 13..60 -> if (lunes) 25 else 30
+        age >= 61 && age <= 100 -> 20
+        else -> -1
+    }
+}
+
+
+
+
+
+
+ejercicio #3
+
+
+fun main() {
+    printFinalTemperature(27.0, "Celsius", "Fahrenheit") { celsiusToFahrenheit(it) }
+    printFinalTemperature(350.0, "Kelvin", "Celsius") { kelvinToCelsius(it) }
+    printFinalTemperature(10.0, "Fahrenheit", "Kelvin") { fahrenheitToKelvin(it) }
+}
+
+fun printFinalTemperature(
+    initialMeasurement: Double,
+    initialUnit: String,
+    finalUnit: String,
+    conversionFormula: (Double) -> Double
+) {
+    val finalMeasurement = String.format("%.2f", conversionFormula(initialMeasurement))
+    println("$initialMeasurement degrees $initialUnit is $finalMeasurement degrees $finalUnit.")
+}
+
+fun celsiusToFahrenheit(celsius: Double): Double {
+    return celsius * 9 / 5 + 32
+}
+
+fun kelvinToCelsius(kelvin: Double): Double {
+    return kelvin - 273.15
+}
+
+fun fahrenheitToKelvin(fahrenheit: Double): Double {
+    return (5 / 9.0) * (fahrenheit - 32) + 273.15
+}
+
+
+
+
+ejercicio #4
+
+fun main() {
+    val amanda = Person("Amanda", 33, "play tennis", null)
+    val atiqah = Person("Atiqah", 28, "climb", amanda)
+    amanda.showProfile()
+    atiqah.showProfile()
+}
+
+class Person(val name: String, val age: Int, val hobby: String?, val referrer: Person?) {
+    fun showProfile() {
+        val referrerInfo = referrer?.let {
+            ", who likes to ${it.hobby}."
+        } ?: ". Doesn't have a referrer."
+        println("Name: $name")
+        println("Age: $age")
+        println("Likes to $hobby$referrerInfo")
+    }
+}
+
+
+
+
+ejercicio #5
+
+fun main() {
+    val myPhone = FoldablePhone()
+    myPhone.switchOn()
+    myPhone.checkPhoneScreenLight()
+    myPhone.fold()
+    myPhone.switchOn()
+    myPhone.checkPhoneScreenLight()
+}
+
+open class Phone(var isScreenLightOn: Boolean = false) {
+    open fun switchOn() {
+        isScreenLightOn = true
+    }
+    
+    fun switchOff() {
+        isScreenLightOn = false
+    }
+    
+    fun checkPhoneScreenLight() {
+        val phoneScreenLight = if (isScreenLightOn) "on" else "off"
+        println("The phone screen's light is $phoneScreenLight.")
+    }
+}
+
+class FoldablePhone(var isFolded: Boolean = true) : Phone() {
+    override fun switchOn() {
+        if (!isFolded) {
+            isScreenLightOn = true
+        }
+    }
+    
+    fun fold() {
+        isFolded = true
+    }
+    
+    fun unfold() {
+        isFolded = false
+    }
+}
+
+
+
+
+ejercicio #6
+
+
+fun main() {
+    val winningBid = Bid(5000, "Private Collector")
+    println("Item A is sold at ${auctionPrice(winningBid, 2000)}.")
+    println("Item B is sold at ${auctionPrice(null, 3000)}.")
+}
+
+class Bid(val amount: Int, val bidder: String)
+
+fun auctionPrice(bid: Bid?, minimumPrice: Int): Int {
+    return bid?.amount ?: minimumPrice
+}
+
+
